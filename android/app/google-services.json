@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "339640322048",
+    "firebase_url": "https://fir-flutter-1639d.firebaseio.com",
+    "project_id": "fir-flutter-1639d",
+    "storage_bucket": "fir-flutter-1639d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339640322048:android:934d50080a066402a830e5",
+        "android_client_info": {
+          "package_name": "com.itachip.fireflutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "339640322048-df5448k57a040a84djpe4j6eeun8lu53.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRczqMJlR4l5hi1T6UXZX_BeC2_uI2eRc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "339640322048-df5448k57a040a84djpe4j6eeun8lu53.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "339640322048-o15h07m5fue4vgk031sq7i8nhk4mukm6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.itachip.fireflutter"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
