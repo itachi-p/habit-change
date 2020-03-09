@@ -1,4 +1,5 @@
 //import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -64,7 +65,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () {
                     var email = emailInputController.text;
                     var password = passwordInputController.text;
-                    // TODO ここにログイン処理を書く
+                    // ログイン処理(別途Firebase管理画面でユーザー登録が必要)
+                    return _signIn(email, password)
+                        .then((AuthResult result) => print(result.user))
+                        .catchError((e) => print(e));
                   },
                 ),
               ),
@@ -74,4 +78,12 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+}
+
+Future<AuthResult> _signIn(String email, String password) async {
+  final _firebaseAuth = FirebaseAuth.instance;
+  final AuthResult result = await _firebaseAuth.signInWithEmailAndPassword(
+      email: email, password: password);
+  print("User id is ${result.user.uid}");
+  return result;
 }

@@ -1,4 +1,4 @@
-# habitchange
+# habit_change
 
 Challenge changing habits in 30 days.
 
