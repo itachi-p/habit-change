@@ -48,7 +48,7 @@ app.*.symbols
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
 **/androidManifest.xml
-**/android/**/google-services.json
+**/android/app/google-services.json
 
 # iOS/XCode related
 **/ios/**/*.mode1v3
