@@ -1,93 +1,146 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Baby Names',
+void main() {
+  runApp(
+    MaterialApp(
+      title: 'habit change_Google Sign in',
       home: MyHomePage(),
-    );
-  }
+    ),
+  );
 }
 
 class MyHomePage extends StatefulWidget {
   @override
-  _MyHomePageState createState() {
-    return _MyHomePageState();
-  }
+  State createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State {
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Katachi members')),
-      body: _buildBody(context),
+      appBar: AppBar(title: Text('The challenge of changing habits')),
+      body: _firebaseUser == null ? _buildGoogleSignInButton() : _layoutBody(),
     );
   }
 
-  Widget _buildBody(BuildContext context) {
-    return StreamBuilder(
-      stream: Firestore.instance.collection('katachi-members').snapshots(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) return LinearProgressIndicator();
+  // Login with email and password
+  final emailInputController = TextEditingController();
+  final passwordInputController = TextEditingController();
 
-        return _buildList(context, snapshot.data.documents);
-      },
+  // Login with Google Sign-in
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  FirebaseUser _firebaseUser;
+
+//  GoogleSignIn _googleSignIn = GoogleSignIn(
+//    scopes: <String>[
+//      'email',
+//      'https://www.googleapis.com/auth/contacts.readonly',
+//    ],
+//  );
+
+//  Future<void> _handleSignIn() async {
+//    try {
+//      await _googleSignIn.signIn();
+//    } catch (error) {
+//      print(error);
+//    }
+//  }
+
+  Future<FirebaseUser> _handleGoogleSignIn() async {
+    GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+    GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
     );
+    _firebaseUser = (await _auth.signInWithCredential(credential)).user;
+    assert(_firebaseUser.email != null);
+    assert(_firebaseUser.displayName != null);
+    assert(!_firebaseUser.isAnonymous);
+    assert(await _firebaseUser.getIdToken() != null);
+
+    final FirebaseUser currentUser = await _auth.currentUser();
+    assert(_firebaseUser.uid == currentUser.uid);
+    print("signed in " + _firebaseUser.displayName);
+    return _firebaseUser;
   }
 
-  Widget _buildList(BuildContext context, List snapshot) {
-    return ListView(
-      padding: const EdgeInsets.only(top: 20.0),
-      children: snapshot.map((data) => _buildListItem(context, data)).toList(),
-    );
-  }
-
-  Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
-    final record = Record.fromSnapshot(data);
-
-    return Padding(
-      key: ValueKey(record.name),
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(5.0),
+  Widget _buildGoogleSignInButton() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Center(
+          child: RaisedButton(
+            child: Text("Google Sign In"),
+            onPressed: () {
+              _handleGoogleSignIn().then((user) {
+                setState(() {
+                  _firebaseUser = user;
+                });
+              }).catchError((error) {
+                print(error);
+              });
+            },
+          ),
         ),
-        child: ListTile(
-          title: Text(record.name),
-          trailing: Text(record.votes.toString()),
-          onTap: () => Firestore.instance.runTransaction((transaction) async {
-            final freshSnapshot = await transaction.get(record.reference);
-            final fresh = Record.fromSnapshot(freshSnapshot);
+      ],
+    );
+  }
 
-            await transaction
-                .update(record.reference, {'votes': fresh.votes + 1});
-          }),
+  Widget _layoutBody() {
+    return Center(
+      child: Form(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              const SizedBox(height: 24.0),
+              TextFormField(
+                controller: emailInputController,
+                decoration: const InputDecoration(
+                  border: const UnderlineInputBorder(),
+                  labelText: 'Email',
+                ),
+              ),
+              const SizedBox(height: 24.0),
+              TextFormField(
+                controller: passwordInputController,
+                decoration: InputDecoration(
+                  border: const UnderlineInputBorder(),
+                  labelText: 'Password',
+                ),
+                obscureText: true,
+              ),
+              const SizedBox(height: 24.0),
+              Center(
+                child: RaisedButton(
+                  child: const Text('Login'),
+                  onPressed: () {
+                    var email = emailInputController.text;
+                    var password = passwordInputController.text;
+                    // ログイン処理(別途Firebase管理画面でユーザー登録が必要)
+                    return _signIn(email, password)
+                        .then((AuthResult result) => print(result.user))
+                        .catchError((e) => print(e));
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class Record {
-  final String name;
-  final int votes;
-  final DocumentReference reference;
-
-  Record.fromMap(Map map, {this.reference})
-      : assert(map['name'] != null),
-        assert(map['votes'] != null),
-        name = map['name'],
-        votes = map['votes'];
-
-  Record.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data, reference: snapshot.reference);
-
-  @override
-  String toString() => "Record<$name:$votes>";
+Future<AuthResult> _signIn(String email, String password) async {
+  final _firebaseAuth = FirebaseAuth.instance;
+  final AuthResult result = await _firebaseAuth.signInWithEmailAndPassword(
+      email: email, password: password);
+  print("User id is ${result.user.uid}");
+  return result;
 }
