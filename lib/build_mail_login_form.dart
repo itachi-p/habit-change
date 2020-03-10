@@ -15,7 +15,7 @@ class MailAndPassLogin extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              const SizedBox(height: 24.0),
+              const SizedBox(height: 20.0),
               TextFormField(
                 controller: emailInputController,
                 decoration: const InputDecoration(
@@ -23,7 +23,7 @@ class MailAndPassLogin extends StatelessWidget {
                   labelText: 'Email',
                 ),
               ),
-              const SizedBox(height: 24.0),
+              const SizedBox(height: 20.0),
               TextFormField(
                 controller: passwordInputController,
                 decoration: InputDecoration(
@@ -58,6 +58,6 @@ Future<AuthResult> _signIn(String email, String password) async {
   final _firebaseAuth = FirebaseAuth.instance;
   final AuthResult result = await _firebaseAuth.signInWithEmailAndPassword(
       email: email, password: password);
-  print("User id is ${result.user.uid}");
+  print("Email login was successful. \n UserID is ${result.user.uid}");
   return result;
 }

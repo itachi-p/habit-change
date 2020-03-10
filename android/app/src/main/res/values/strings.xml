@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Your App Name here.</string>
+
+    <!-- "000000000000"をアプリIDに変える. -->
+    <string name="facebook_app_id">202647027638404</string>
+
+    <!--
+      Replace "fb000000000000"の"000000000000"をアプリIDに変える.
+      **NOTE**: 最初にfbがつくので注意！.
+    -->
+    <string name="fb_login_protocol_scheme">fb202647027638404</string>
+</resources>

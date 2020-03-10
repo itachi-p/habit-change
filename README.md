@@ -1,4 +1,11 @@
-#fireflutter
+# firebase-flutter
+
+- Cloud Firestore
+- Firebase Authentication
+- Google Sign In
+- Facebook Sign In
+- Twitter Sign In
+- (option) GitHub Sign In
 
 The error was resolved with the following version settings, and the connection with Firebase was successful.
 

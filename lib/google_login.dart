@@ -8,7 +8,7 @@ class GoogleLogin extends StatefulWidget {
 }
 
 class _GoogleLoginState extends State {
-// Login with Google Sign-in
+  // Login with Google Sign-in
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   FirebaseUser _firebaseUser;
