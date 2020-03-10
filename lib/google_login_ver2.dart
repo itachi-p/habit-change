@@ -2,38 +2,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'google auth sample',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: SNSLogin(
-        title: 'Google Auth Aample with Firebase',
-      ),
-    );
-  }
-}
-
-class SNSLogin extends StatefulWidget {
-  SNSLogin({
-    Key key,
-    this.title,
-  }) : super(
-          key: key,
-        );
+class GoogleLoginVer2 extends StatefulWidget {
+  GoogleLoginVer2({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _SNSLoginState createState() => _SNSLoginState();
+  _GoogleLoginVer2State createState() => _GoogleLoginVer2State();
 }
 
-class _SNSLoginState extends State {
+class _GoogleLoginVer2State extends State {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
@@ -100,19 +78,13 @@ class _SNSLoginState extends State {
         textColor: Colors.white,
         onPressed: signOutGoogle);
 
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("Google logout"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            loggedIn ? loginText : logoutText,
-            loggedIn ? logoutButton : loginButton,
-          ],
-        ),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          loggedIn ? loginText : logoutText,
+          loggedIn ? logoutButton : loginButton,
+        ],
       ),
     );
   }
