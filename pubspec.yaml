@@ -1,4 +1,4 @@
-name: habitchange
+name: habit_change
 description: Challenge changing habits in 30 days.
 
 version: 1.0.0+1
@@ -10,8 +10,9 @@ dependencies:
   flutter:
     sdk: flutter
   firebase_core: 0.4.4
-  firebase_auth: ^0.15.5+2
-  cloud_firestore: 0.13.4
+  firebase_auth: 0.15.0
+  google_sign_in: 4.1.4
+  #cloud_firestore: 0.13.4
 
   cupertino_icons: ^0.1.3
 

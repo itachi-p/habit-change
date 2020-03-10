@@ -1,23 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'habit change',
+void main() {
+  runApp(
+    MaterialApp(
+      title: 'habit change_Google Sign in',
       home: MyHomePage(),
-    );
-  }
+    ),
+  );
 }
 
 class MyHomePage extends StatefulWidget {
   @override
-  _MyHomePageState createState() {
-    return _MyHomePageState();
-  }
+  State createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -25,12 +21,74 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('The challenge of changing habits')),
-      body: _layoutBody(),
+      body: _firebaseUser == null ? _buildGoogleSignInButton() : _layoutBody(),
     );
   }
 
+  // Login with email and password
   final emailInputController = TextEditingController();
   final passwordInputController = TextEditingController();
+
+  // Login with Google Sign-in
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  FirebaseUser _firebaseUser;
+
+//  GoogleSignIn _googleSignIn = GoogleSignIn(
+//    scopes: <String>[
+//      'email',
+//      'https://www.googleapis.com/auth/contacts.readonly',
+//    ],
+//  );
+
+//  Future<void> _handleSignIn() async {
+//    try {
+//      await _googleSignIn.signIn();
+//    } catch (error) {
+//      print(error);
+//    }
+//  }
+
+  Future<FirebaseUser> _handleGoogleSignIn() async {
+    GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+    GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    _firebaseUser = (await _auth.signInWithCredential(credential)).user;
+    assert(_firebaseUser.email != null);
+    assert(_firebaseUser.displayName != null);
+    assert(!_firebaseUser.isAnonymous);
+    assert(await _firebaseUser.getIdToken() != null);
+
+    final FirebaseUser currentUser = await _auth.currentUser();
+    assert(_firebaseUser.uid == currentUser.uid);
+    print("signed in " + _firebaseUser.displayName);
+    return _firebaseUser;
+  }
+
+  Widget _buildGoogleSignInButton() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Center(
+          child: RaisedButton(
+            child: Text("Google Sign In"),
+            onPressed: () {
+              _handleGoogleSignIn().then((user) {
+                setState(() {
+                  _firebaseUser = user;
+                });
+              }).catchError((error) {
+                print(error);
+              });
+            },
+          ),
+        ),
+      ],
+    );
+  }
 
   Widget _layoutBody() {
     return Center(
