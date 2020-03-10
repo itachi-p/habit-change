@@ -34,21 +34,6 @@ class _MyHomePageState extends State<MyHomePage> {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   FirebaseUser _firebaseUser;
 
-//  GoogleSignIn _googleSignIn = GoogleSignIn(
-//    scopes: <String>[
-//      'email',
-//      'https://www.googleapis.com/auth/contacts.readonly',
-//    ],
-//  );
-
-//  Future<void> _handleSignIn() async {
-//    try {
-//      await _googleSignIn.signIn();
-//    } catch (error) {
-//      print(error);
-//    }
-//  }
-
   Future<FirebaseUser> _handleGoogleSignIn() async {
     GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     GoogleSignInAuthentication googleAuth = await googleUser.authentication;
