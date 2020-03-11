@@ -42,18 +42,36 @@
             </array>
         <key>UIViewControllerBasedStatusBarAppearance</key>
         <false/>
+
         <!-- Google Sign-in Section -->
         <key>CFBundleURLTypes</key>
         <array>
             <dict>
-            <key>CFBundleTypeRole</key>
-            <string>Editor</string>
-            <key>CFBundleURLSchemes</key>
-        <array>
-            <string>com.googleusercontent.apps.339640322048-o15h07m5fue4vgk031sq7i8nhk4mukm6</string>
-        </array>
+                <key>CFBundleTypeRole</key>
+                <string>Editor</string>
+                <key>CFBundleURLSchemes</key>
+                <array>
+                    <string>com.googleusercontent.apps.339640322048-o15h07m5fue4vgk031sq7i8nhk4mukm6</string>
+                    <string>fb202647027638404</string>
+                </array>
             </dict>
         </array>
         <!-- End of the Google Sign-in Section -->
+
+        <!-- Facebook Sign-in Section  -->
+        <key>FacebookAppID</key>
+        <string>202647027638404</string>
+        <key>FacebookDisplayName</key>
+
+        <!-- アプリ名に変更 -->
+        <string>auth-flutter-sample</string>
+
+        <key>LSApplicationQueriesSchemes</key>
+        <array>
+            <string>fbapi</string>
+            <string>fb-messenger-share-api</string>
+            <string>fbauth2</string>
+            <string>fbshareextension</string>
+        </array>
 </dict>
 </plist>

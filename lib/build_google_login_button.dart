@@ -30,7 +30,7 @@ class _GoogleLoginVer2State extends State {
   }
 
   Future signInWithGoogle() async {
-    //サインイン画面が表示
+    //サインイン画面表示
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
     final GoogleSignInAuthentication googleSignInAuthentication =
         await googleSignInAccount.authentication;
@@ -63,8 +63,14 @@ class _GoogleLoginVer2State extends State {
 
   @override
   Widget build(BuildContext context) {
-    Widget logoutText = Text("ログアウト中");
-    Widget loginText = Text("ログイン中");
+    Widget logoutText = Text(
+      "You are signed out of Google.",
+      style: TextStyle(fontSize: 20, backgroundColor: Colors.deepOrange),
+    );
+    Widget loginText = Text(
+      "You are logged into Google.",
+      style: TextStyle(fontSize: 20, backgroundColor: Colors.blue),
+    );
 
     Widget loginButton = RaisedButton(
       child: Text("Sign in with Google"),
