@@ -1,14 +1,27 @@
-# firebase-flutter
+# habit_change
 
-- Cloud Firestore
-- Firebase Authentication
-- Google Sign In
-- Facebook Sign In
-- Twitter Sign In
-- (option) GitHub Sign In
+Challenge changing habits in 30 days.
 
-The error was resolved with the following version settings, and the connection with Firebase was successful.
+### Development plan
+1. Create a login screen using Firebase Authentication.
+2. Create the application body.
+3. Submit the completed app to Google Play by the end of March.
 
-[issues 'UserAgent.h' file not found](https://github.com/flutter/flutter/issues/35670)
+###### Details on 1. above
+1. Prepare a temporary login screen. (done)
+2. First, authenticate with email address and password. (done)
+3. Next, add Google authentication. (done)
+4. Add Twitter, Facebook(done) and GitHub(option) certifications.
 
-![issues comment](https://raw.githubusercontent.com/itachi-P/firestore-flutter-connect/images/ss_200306_001.png)
+####### Details on 2.
+1. The production login screen will be postponed and the application itself will be created.
+2. the functional requirements in the first phase (ver.1.0) are satisfied, the development is once completed.
+3. Implement a production login screen.
+
+## Getting Started
+
+- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- [online documentation](https://flutter.dev/docs)
+
+
