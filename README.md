@@ -13,7 +13,7 @@ Challenge changing habits in 30 days.
 3. Next, add Google authentication. (done)
 4. Add Twitter, Facebook(done) and GitHub(option) certifications.
 
-####### Details on 2.
+###### Details on 2.
 1. The production login screen will be postponed and the application itself will be created.
 2. the functional requirements in the first phase (ver.1.0) are satisfied, the development is once completed.
 3. Implement a production login screen.
