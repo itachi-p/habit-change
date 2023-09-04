@@ -1,11 +1,13 @@
-# habit_change
+# habit-change
 
-Challenge changing habits in 30 days.
+Support app to change habits in 30 days.
 
-### Development plan
+## Development plan
+
 1. Create a login screen using Firebase Authentication.
 2. Create the application body.
-3. Submit the completed app to Google Play by the end of March/2020.
+3. Submit the completed app to Google Play by the end of March/2020.  
+(Before number 3, began Corona-Shock and development stopped. Oh...)
 
 ###### Details on 1. above
 1. Prepare a temporary login screen. (done)
